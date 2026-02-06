@@ -119,12 +119,14 @@ def main():
     
     private_key = PRIVATE_KEY_PATH.read_text()
     
-    # Create JWT
-    print("🔐 Creating JWT...")
+    # Create JWT (silent if token_only)
+    if not args.token_only:
+        print("🔐 Creating JWT...")
     jwt_token = create_jwt(APP_ID, private_key)
     
     # Get installation token
-    print("🎫 Getting installation access token...")
+    if not args.token_only:
+        print("🎫 Getting installation access token...")
     token_response = get_installation_token(jwt_token, INSTALLATION_ID)
     access_token = token_response["token"]
     expires_at = token_response["expires_at"]
